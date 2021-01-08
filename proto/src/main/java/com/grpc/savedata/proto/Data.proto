@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package proto;
+
+option java_package = "com.grpc.savedata.proto";
+option java_multiple_files = true;
+
+enum FileType {
+   CSV = 0;
+   XML = 1;
+}
+
+message Data {
+   string name = 1;
+   string dob = 2;
+   double salary = 3;
+   int32 age = 4;
+}
+
+message DataList {
+   repeated Data data = 1;
+}
+
+message RequestPayload {
+   DataList dataList = 1;
+   FileType fileType = 2;
+}
+
+message Status {
+   string message = 1;
+}
+
+message Transport {
+   bytes binaryDataSet = 1;
+}
+
+service SaveDataService {
+   rpc save(Transport) returns (Status);
+   rpc update(Transport) returns (Status);
+}
